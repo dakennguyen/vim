@@ -1,0 +1,39 @@
+{
+  "languageserver": {},
+  "diagnostic.messageTarget": "echo",
+  "diagnostic.checkCurrentLine": true,
+  "coc.source.file.enable": false,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "ruby",
+    "html",
+    "css",
+    "scss",
+    "javascriptreact",
+    "javascript",
+    "typescript",
+    "jsonc",
+    "json"
+  ],
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true,
+  "yaml.format.enable": true,
+  "suggest.maxCompleteItemCount": 25,
+  "suggest.minTriggerInputLength": 3,
+  "eslint.autoFixOnSave": true,
+  "javascript.suggestionActions.enabled": false,
+  "javascript.validate.enable": false,
+  "markdownlint.onOpen": true,
+  "markdownlint.onChange": false,
+  "markdownlint.config": {
+    "default": true,
+    "line_length": false
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "prettier.trailingComma": "all",
+  "prettier.bracketSpacing": true,
+  "prettier.singleQuote": true,
+  "prettier.eslintIntegration": true,
+  "snippets.ultisnips.pythonPrompt": false
+}
