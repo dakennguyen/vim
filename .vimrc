@@ -507,8 +507,8 @@ endif
 set diffopt+=vertical
 nnoremap <silent> gs :G<CR>
 nnoremap <silent> gb :Git blame<CR>
-nnoremap <silent> go :Git branch<CR>
-nnoremap <silent> <leader>gr :Git branch --remote<CR>
+nnoremap <silent> go :Git branch \| set filetype=gitbranch<CR>
+nnoremap <silent> <leader>gr :Git branch --remote \| set filetype=gitbranch<CR>
 nnoremap <silent> <leader>gc :Gclog! -n 50 \| copen<cr>
 nnoremap <silent> <leader>gd :Gdiffsplit<CR>
 nnoremap <silent> <leader>gz :Gclog! -g stash \| copen<CR>
