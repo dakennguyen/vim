@@ -5,8 +5,8 @@ let g:loaded_ruby_provider = 0
 call plug#begin()
 
 " Group: Theme
-Plug 'joshdick/onedark.vim'
-Plug 'tribela/vim-transparent'
+Plug 'nordtheme/vim'
+" Plug 'tribela/vim-transparent'
 Plug 'itchyny/lightline.vim'
 
 " Group: TPope
@@ -80,7 +80,7 @@ set belloff=all
 set encoding=utf8
 set laststatus=2
 set termguicolors
-colorscheme onedark
+colorscheme nord
 
 " Fold
 set foldenable
@@ -111,6 +111,7 @@ nnoremap <leader>0 :e<cr>
 nnoremap <silent> <leader><space> :noh<cr>
 nnoremap <silent> <leader>s :w<CR>
 nnoremap <leader>a <C-^>
+nnoremap <space>a :A<CR>
 nnoremap <silent> <leader>w <C-w>
 nnoremap ! :!
 nnoremap 0 ^
@@ -121,6 +122,10 @@ nnoremap <silent> # #<S-N>
 nnoremap <silent> * *<S-N>
 vnoremap # y?\V<C-R>=escape(@",'/\')<CR><CR><S-N>
 vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR><S-N>
+
+" join and break line
+nnoremap J mzJ`z
+nnoremap <silent> K i<CR><ESC>l
 
 " quit
 nnoremap <silent> <leader>q :q<CR><C-W><C-P>
@@ -151,7 +156,7 @@ nnoremap <expr> ` "`" . nr2char(getchar()) . "zt"
 noremap gp "0p
 noremap gP "0P
 noremap <leader>y "*y
-" noremap <leader>p "*p
+noremap <leader>p "*p
 
 " resize panes
 nnoremap <silent> <Up>    :10winc +<CR>
@@ -168,7 +173,7 @@ nnoremap <silent> <space>sl :source Session.vim<CR>
 nnoremap <leader>z <C-W>_<C-W><Bar>
 
 " File
-nnoremap <silent> <leader>fc :saveas <C-R>=expand("%:p:h")<CR>/|                   " File > Copy
+nnoremap <leader>fc :saveas <C-R>=expand("%")<CR>|                                 " File > Copy
 nnoremap <silent> <leader>fyd :let @+=expand("%:h") \| echo @+<CR>|                " File > Yank > Directory Path
 nnoremap <silent> <leader>fyy :let @+=expand("%") \| echo @+<CR>|                  " File > Yank > Relative File Path
 nnoremap <silent> <leader>fyl :let @+=expand("%").":".line(".") \| echo @+<CR>|    " File > Yank > Relative File Path with Line number
@@ -189,7 +194,7 @@ nmap <silent> <C-k> :wincmd k<CR>
 nmap <silent> <C-l> :wincmd l<CR>
 
 " quickfix and loclist
-" nnoremap <silent> <leader>c :copen<cr>
+nnoremap <silent> <leader>c :copen<cr>
 " nnoremap <silent> <leader>l :lopen<cr>
 
 " #############################################
@@ -471,9 +476,9 @@ nmap <silent> t<C-g> :TestVisit<CR>
 "---------------------------------------------------------------------------
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'nord',
       \ 'active': {
-      \   'left': [ [ 'short_mode' ],
+      \   'left': [ [ 'mode' ],
       \             [ 'readonly', 'filename', 'modified' ] ],
       \   'right': [ [ 'lineinfo' ],
       \              [ 'filetype' ] ]
