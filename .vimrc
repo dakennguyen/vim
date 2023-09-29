@@ -16,7 +16,6 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-endwise'
 Plug 'dakennguyen/vim-unimpaired'
 
@@ -36,6 +35,8 @@ Plug 'AndrewRadev/splitjoin.vim'
 " Group: Files manager
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'justinmk/vim-dirvish'
+Plug 'dakennguyen/vim-dirvish-dovish'
 
 " Group: Navigator
 Plug 'easymotion/vim-easymotion'
@@ -527,6 +528,12 @@ noremap <leader>go :diffget \| diffupdate<cr>
 nnoremap <silent> <leader>gv :GV!<CR>
 vnoremap <silent> <leader>gv :GV<CR>
 nnoremap <silent> <space>gg :GV -n 200<cr>
+
+"---------------------------------------------------------------------------
+" Plug 'justinmk/vim-dirvish'
+"---------------------------------------------------------------------------
+let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
+let g:dirvish_relative_paths = 1
 
 "---------------------------------------------------------------------------
 " Plug 'preservim/nerdtree'
