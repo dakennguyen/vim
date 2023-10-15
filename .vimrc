@@ -63,8 +63,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'github/copilot.vim'
 
 " Group: Files manager
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'kien/ctrlp.vim'
 Plug 'justinmk/vim-dirvish'
 Plug 'dakennguyen/vim-dirvish-dovish'
 
@@ -310,68 +309,11 @@ autocmd User ProjectionistDetect
       \ })
 
 "----------------------------------------------
-" Plug 'junegunn/fzf.vim'
+" Plug 'kien/ctrlp.vim'
 "----------------------------------------------
-let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
-let $FZF_DEFAULT_OPTS=" --bind '∆:preview-down,˚:preview-up,∂:preview-page-down,¨:preview-page-up'"
-let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-let g:fzf_layout = { 'down': '80%' }
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit' }
-let g:fzf_colors =
-  \ {
-  \   'fg':      ['fg', 'Normal'],
-  \   'bg':      ['bg', 'Normal'],
-  \   'hl':      ['fg', 'Comment'],
-  \   'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \   'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \   'hl+':     ['fg', 'Statement'],
-  \   'info':    ['fg', 'PreProc'],
-  \   'border':  ['fg', 'Ignore'],
-  \   'prompt':  ['fg', 'Conditional'],
-  \   'pointer': ['fg', 'Exception'],
-  \   'marker':  ['fg', 'Keyword'],
-  \   'spinner': ['fg', 'Label'],
-  \   'header':  ['fg', 'Comment']
-  \ }
-
-" Files
-nnoremap <space>ff <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
-nnoremap <silent> <space>fd :Files %:p:h<CR>
-nnoremap <silent> <space>fb :Buffers<CR>
-nnoremap <silent> <space>fo :History<CR>
-nnoremap <silent> <space>fh :Helptags<CR>
-nnoremap <silent> <space>fm :Maps<CR>
-nnoremap <silent> <space>fc :History:<CR>
-
-nnoremap <silent> <space>fs :Files local_scripts<CR>
-
-" Search
-nnoremap <silent> //           :BLines<CR>
-nnoremap \                     :Rg<space>
-nnoremap <silent> <space>fw   :Rg <C-R><C-W><CR>
-vnoremap <space>fw           y:Rg <C-R>=escape(@",'/\')<CR><CR>
-
-" Insert mode completion
-inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
-  \ 'prefix': '^.*$',
-  \ 'source': 'rg -n ^ --color always',
-  \ 'options': '--ansi --delimiter : --nth 3..',
-  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
-
-" Insert mode completion for EH FE locale
-function! s:find_key(lines)
-  let stripped = substitute(join(a:lines), '^\s*\(.\{-}\)\s*$', '\1', '')
-  let key = split(stripped, '\"')[0]
-  return join(["Intl.formatMessage({ id: '", key, "' })"], "")
-endfunction
-
-inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
-  \ 'source': 'cat ~/Documents/Workspace/Thinkei/frontend-core/src/packages/eh-locale/lang/en-AU.json',
-  \ 'reducer': function('<sid>find_key')
-  \ }))
+let g:ctrlp_map = '<space>ff'
+let g:ctrlp_show_hidden = 1
+nnoremap <silent> <space>fb :CtrlPBuffer<cr>
 
 "----------------------------------------------
 " Plug 'easymotion/vim-easymotion'
