@@ -153,6 +153,26 @@ nnoremap <silent> # #<S-N>
 nnoremap <silent> * *<S-N>
 vnoremap # y?\V<C-R>=escape(@",'/\')<CR><CR><S-N>
 vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR><S-N>
+" command -nargs=1 Sch noautocmd vimgrep /<args>/gj `git ls-files` | cw
+function! Grep(...)
+  " https://www.reddit.com/r/vim/comments/neuosg/asynchronous_find_and_grep/
+  silent! !git rev-parse --is-inside-work-tree
+  if v:shell_error == 0
+    let cmd = 'git grep --line-number ' . join(a:000, ' ')
+  else
+    let grep = 'grep '
+    if executable("rg")
+      let grep = 'rg --vimgrep '
+    endif
+    let cmd = grep . '--line-number ' . join(a:000, ' ') . ' .'
+  endif
+  execute 'Dispatch ' . cmd | copen
+endfunction
+
+command! -nargs=+ -complete=file_in_path Grep call Grep(<f-args>)
+nnoremap \                  :Grep<space>
+nnoremap <silent> <space>fw :Grep <C-R><C-W><CR>
+vnoremap <space>fw         y:Grep <C-R>=escape(@",'/\')<CR><CR>
 
 " join and break line
 nnoremap J mzJ`z
