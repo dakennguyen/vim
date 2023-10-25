@@ -60,6 +60,7 @@ Plug 'vim-test/vim-test'
 " Group: Editing support
 Plug 'alvan/vim-closetag'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'github/copilot.vim'
 
 " Group: Files manager
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -362,6 +363,12 @@ nmap <silent> s <Plug>(easymotion-bd-f)
 "----------------------------------------------
 let g:splitjoin_split_mapping = ']s'
 let g:splitjoin_join_mapping  = '[s'
+
+"----------------------------------------------
+" Plug 'github/copilot.vim'
+"----------------------------------------------
+let g:copilot_no_tab_map = v:true
+inoremap <silent><script><expr> <c-j> copilot#Accept("<CR>")
 
 "----------------------------------------------
 " Plug 'airblade/vim-gitgutter'
