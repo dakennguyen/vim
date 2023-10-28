@@ -293,9 +293,9 @@ autocmd User ProjectionistDetect
 " Plug 'junegunn/fzf.vim'
 "----------------------------------------------
 let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
-let $FZF_DEFAULT_OPTS=" --bind '∆:preview-down,˚:preview-up,∂:preview-page-down,¨:preview-page-up'"
-let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-let g:fzf_layout = { 'down': '80%' }
+let $FZF_DEFAULT_OPTS=" --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up'"
+let g:fzf_preview_source=" --layout reverse --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+let g:fzf_layout = { 'down': '50%' }
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-s': 'split',
@@ -349,7 +349,7 @@ function! s:find_key(lines)
 endfunction
 
 inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
-  \ 'source': 'cat ~/Documents/Workspace/Thinkei/frontend-core/src/packages/eh-locale/lang/en-AU.json',
+  \ 'source': 'cat ~/Workspace/Thinkei/frontend-core/src/packages/eh-locale/lang/en-AU.json',
   \ 'reducer': function('<sid>find_key')
   \ }))
 
@@ -570,16 +570,6 @@ nnoremap <silent> <space>gg :GV -n 200<cr>
 "---------------------------------------------------------------------------
 let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
 let g:dirvish_relative_paths = 1
-
-"---------------------------------------------------------------------------
-" Plug 'preservim/nerdtree'
-"---------------------------------------------------------------------------
-let g:NERDTreeWinSize=40
-let NERDTreeShowHidden=1
-let NERDTreeMapOpenSplit = 's'
-let NERDTreeMapOpenVSplit = 'v'
-nnoremap <leader>nt :NERDTreeToggle<CR>
-nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
 
 " #############################################
 " Section: Functions
