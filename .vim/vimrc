@@ -1,4 +1,10 @@
-set background=dark
+let output =  system("defaults read -g AppleInterfaceStyle")
+if v:shell_error != 0
+  set background=light
+else
+  set background=dark
+endif
+
 let g:loaded_ruby_provider = 0
 
 let g:loaded_2html_plugin = 1
@@ -34,7 +40,7 @@ let g:loaded_bugreport = 1
 call plug#begin()
 
 " Group: Theme
-Plug 'nordtheme/vim'
+Plug 'morhetz/gruvbox'
 " Plug 'tribela/vim-transparent'
 Plug 'itchyny/lightline.vim'
 
@@ -111,7 +117,7 @@ set belloff=all
 set encoding=utf8
 set laststatus=2
 set termguicolors
-colorscheme nord
+colorscheme gruvbox
 
 " Fold
 set foldenable
@@ -121,7 +127,7 @@ set foldmethod=indent
 
 " Search
 set incsearch
-set hlsearch
+set nohlsearch
 " set inccommand=split
 set ignorecase
 set smartcase
@@ -293,9 +299,9 @@ autocmd User ProjectionistDetect
 " Plug 'junegunn/fzf.vim'
 "----------------------------------------------
 let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
-let $FZF_DEFAULT_OPTS=" --bind '∆:preview-down,˚:preview-up,∂:preview-page-down,¨:preview-page-up'"
-let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-let g:fzf_layout = { 'down': '80%' }
+let $FZF_DEFAULT_OPTS=" --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up'"
+let g:fzf_preview_source=" --layout reverse --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+let g:fzf_layout = { 'down': '50%' }
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-s': 'split',
@@ -318,7 +324,8 @@ let g:fzf_colors =
   \ }
 
 " Files
-nnoremap <space>ff <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
+nnoremap <silent> <space>ff :Files<CR>
+nnoremap <silent> <space>fv :Files ~/.dotfiles<CR>
 nnoremap <silent> <space>fd :Files %:p:h<CR>
 nnoremap <silent> <space>fb :Buffers<CR>
 nnoremap <silent> <space>fo :History<CR>
@@ -340,18 +347,6 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
   \ 'source': 'rg -n ^ --color always',
   \ 'options': '--ansi --delimiter : --nth 3..',
   \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
-
-" Insert mode completion for EH FE locale
-function! s:find_key(lines)
-  let stripped = substitute(join(a:lines), '^\s*\(.\{-}\)\s*$', '\1', '')
-  let key = split(stripped, '\"')[0]
-  return join(["Intl.formatMessage({ id: '", key, "' })"], "")
-endfunction
-
-inoremap <expr> <c-x><c-k> fzf#vim#complete(fzf#wrap({
-  \ 'source': 'cat ~/Documents/Workspace/Thinkei/frontend-core/src/packages/eh-locale/lang/en-AU.json',
-  \ 'reducer': function('<sid>find_key')
-  \ }))
 
 "----------------------------------------------
 " Plug 'easymotion/vim-easymotion'
@@ -391,7 +386,7 @@ set nowritebackup
 set cmdheight=1
 set updatetime=300
 set shortmess+=c
-set signcolumn=yes
+set signcolumn=auto
 
 autocmd FileType scss setl iskeyword+=@-@
 
@@ -490,8 +485,8 @@ let g:dispatch_compilers = {
 "---------------------------------------------------------------------------
 " Plug 'vim-test/vim-test'
 "---------------------------------------------------------------------------
-let test#strategy = "dispatch_background"
-let g:test#preserve_screen = 1
+let test#strategy = "dispatch"
+let g:test#preserve_screen = 0
 let g:test#ruby#bundle_exec = 1
 let g:test#ruby#use_binstubs = 0
 let g:test#neovim#term_position = "vert"
@@ -513,7 +508,7 @@ nmap <silent> t<C-g> :TestVisit<CR>
 "---------------------------------------------------------------------------
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode' ],
       \             [ 'readonly', 'filename', 'modified' ] ],
@@ -570,16 +565,6 @@ nnoremap <silent> <space>gg :GV -n 200<cr>
 "---------------------------------------------------------------------------
 let g:dirvish_mode = ':sort ,^\v(.*[\/])|\ze,'
 let g:dirvish_relative_paths = 1
-
-"---------------------------------------------------------------------------
-" Plug 'preservim/nerdtree'
-"---------------------------------------------------------------------------
-let g:NERDTreeWinSize=40
-let NERDTreeShowHidden=1
-let NERDTreeMapOpenSplit = 's'
-let NERDTreeMapOpenVSplit = 'v'
-nnoremap <leader>nt :NERDTreeToggle<CR>
-nnoremap <leader>nr :NERDTreeRefreshRoot<CR>
 
 " #############################################
 " Section: Functions
