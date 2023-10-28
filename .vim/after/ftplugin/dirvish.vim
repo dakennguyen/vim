@@ -14,6 +14,6 @@ xnoremap <buffer><silent><nowait> y <Plug>(dovish_yank)
 nnoremap <buffer><silent><nowait> mc <Plug>(dovish_copy)
 nnoremap <buffer><silent><nowait> mm <Plug>(dovish_move)
 
-nmap <buffer><silent> <leader>fp :!open -a 'google chrome' '<c-r><c-f>'<cr>
+nmap <buffer><silent> <leader>fp :!open -a 'arc' '<c-r><c-f>'<cr>
 
 nnoremap <buffer><silent><nowait> <space>ff :CtrlPDir %<cr>
