@@ -2,6 +2,8 @@ nmap <nowait><buffer> <c-s> o
 nmap <nowait><buffer> <c-v> gO
 nmap <nowait><buffer> <c-t> O
 
+nnoremap <buffer> - :e.<cr>
+
 nnoremap <buffer> cl :Git pull
 nnoremap <buffer> cp :Git push
 nnoremap <buffer> ch :Git fetch
