@@ -34,7 +34,7 @@ let g:loaded_bugreport = 1
 call plug#begin()
 
 " Group: Theme
-Plug 'nordtheme/vim'
+Plug 'arcticicestudio/nord-vim'
 " Plug 'tribela/vim-transparent'
 Plug 'itchyny/lightline.vim'
 
