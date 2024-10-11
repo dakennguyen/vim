@@ -34,7 +34,7 @@ let g:loaded_bugreport = 1
 call plug#begin()
 
 " Group: Theme
-Plug 'arcticicestudio/nord-vim'
+Plug 'ghifarit53/tokyonight-vim'
 " Plug 'tribela/vim-transparent'
 Plug 'itchyny/lightline.vim'
 
@@ -105,7 +105,8 @@ set belloff=all
 set encoding=utf8
 set laststatus=2
 set termguicolors
-colorscheme nord
+let g:tokyonight_style = 'storm'
+colorscheme tokyonight
 
 " Fold
 set foldenable
@@ -414,7 +415,7 @@ nmap <silent> t<C-g> :TestVisit<CR>
 "---------------------------------------------------------------------------
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'tokyonight',
       \ 'active': {
       \   'left': [ [ 'mode' ],
       \             [ 'readonly', 'filename', 'modified' ] ],
