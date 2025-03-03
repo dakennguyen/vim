@@ -31,55 +31,6 @@ let g:loaded_bugreport = 1
 
 " set tags=./tags;,tags;
 
-call plug#begin()
-
-" Group: Theme
-Plug 'morhetz/gruvbox'
-" Plug 'tribela/vim-transparent'
-Plug 'itchyny/lightline.vim'
-
-" Group: TPope
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'dakennguyen/vim-unimpaired'
-
-" Group: Language support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-json', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-tsserver', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'fannheyward/coc-markdownlint', { 'do': 'yarn install --frozen-lockfile' }
-
-" Group: Framework support
-Plug 'vim-test/vim-test'
-
-" Group: Editing support
-Plug 'alvan/vim-closetag'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'github/copilot.vim'
-
-" Group: Files manager
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'justinmk/vim-dirvish'
-Plug 'dakennguyen/vim-dirvish-dovish'
-
-" Group: Navigator
-Plug 'easymotion/vim-easymotion'
-
-" Group: Git
-Plug 'airblade/vim-gitgutter'
-Plug 'dakennguyen/gv.vim'
-
-" Group: Miscellaneous
-Plug 'gcmt/taboo.vim'
-
-call plug#end()
-
 " #############################################
 " Section: Settings
 " #############################################
@@ -131,11 +82,6 @@ set smartcase
 " #############################################
 
 let mapleader = ','
-
-nnoremap <space>ph :PlugStatus<cr>
-nnoremap <space>ps :PlugUpdate<cr>
-nnoremap <space>pi :PlugInstall<cr>
-nnoremap <space>pc :PlugClean<cr>
 
 " General
 nnoremap <leader>0 :e<cr>

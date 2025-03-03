@@ -1,0 +1,100 @@
+[submodule "pack/morhetz/start/gruvbox"]
+	path = pack/morhetz/start/gruvbox
+	url = git@github.com:morhetz/gruvbox.git
+
+[submodule "pack/itchyny/start/lightline"]
+	path = pack/itchyny/start/lightline
+	url = git@github.com:itchyny/lightline.vim.git
+
+[submodule "pack/tpope/start/dispatch"]
+	path = pack/tpope/start/dispatch
+	url = git@github.com:tpope/vim-dispatch.git
+
+[submodule "pack/tpope/start/fugitive"]
+	path = pack/tpope/start/fugitive
+	url = git@github.com:tpope/vim-fugitive.git
+
+[submodule "pack/tpope/start/projectionist"]
+	path = pack/tpope/start/projectionist
+	url = git@github.com:tpope/vim-projectionist.git
+
+[submodule "pack/tpope/start/rhubarb"]
+	path = pack/tpope/start/rhubarb
+	url = git@github.com:tpope/vim-rhubarb.git
+
+[submodule "pack/tpope/start/commentary"]
+	path = pack/tpope/start/commentary
+	url = git@github.com:tpope/vim-commentary.git
+
+[submodule "pack/tpope/start/endwise"]
+	path = pack/tpope/start/endwise
+	url = git@github.com:tpope/vim-endwise.git
+
+[submodule "pack/dakennguyen/start/unimpaired"]
+	path = pack/dakennguyen/start/unimpaired
+	url = git@github.com:dakennguyen/vim-unimpaired.git
+
+[submodule "pack/neoclide/start/coc.nvim"]
+	path = pack/neoclide/start/coc.nvim
+	url = git@github.com:neoclide/coc.nvim.git
+	branch = release
+
+[submodule "pack/neoclide/start/coc-json"]
+	path = pack/neoclide/start/coc-json
+	url = git@github.com:neoclide/coc-json.git
+
+[submodule "pack/neoclide/start/coc-tsserver"]
+	path = pack/neoclide/start/coc-tsserver
+	url = git@github.com:neoclide/coc-tsserver.git
+
+[submodule "pack/fannheyward/start/coc-markdownlint"]
+	path = pack/fannheyward/start/coc-markdownlint
+	url = git@github.com:fannheyward/coc-markdownlint.git
+
+[submodule "pack/vim-test/start/vim-test"]
+	path = pack/vim-test/start/vim-test
+	url = git@github.com:vim-test/vim-test.git
+
+[submodule "pack/alvan/start/closetag"]
+	path = pack/alvan/start/closetag
+	url = git@github.com:alvan/vim-closetag.git
+
+[submodule "pack/AndrewRadev/start/splitjoin"]
+	path = pack/AndrewRadev/start/splitjoin
+	url = git@github.com:AndrewRadev/splitjoin.vim.git
+
+[submodule "pack/github/start/copilot"]
+	path = pack/github/start/copilot
+	url = git@github.com:github/copilot.vim.git
+
+[submodule "pack/junegunn/start/fzf"]
+	path = pack/junegunn/start/fzf
+	url = git@github.com:junegunn/fzf.git
+
+[submodule "pack/junegunn/start/fzf.vim"]
+	path = pack/junegunn/start/fzf.vim
+	url = git@github.com:junegunn/fzf.vim.git
+
+[submodule "pack/justinmk/start/dirvish"]
+	path = pack/justinmk/start/dirvish
+	url = git@github.com:justinmk/vim-dirvish.git
+
+[submodule "pack/dakennguyen/start/dirvish-dovish"]
+	path = pack/dakennguyen/start/dirvish-dovish
+	url = git@github.com:dakennguyen/vim-dirvish-dovish.git
+
+[submodule "pack/easymotion/start/easymotion"]
+	path = pack/easymotion/start/easymotion
+	url = git@github.com:easymotion/vim-easymotion.git
+
+[submodule "pack/airblade/start/gitgutter"]
+	path = pack/airblade/start/gitgutter
+	url = git@github.com:airblade/vim-gitgutter.git
+
+[submodule "pack/dakennguyen/start/gv"]
+	path = pack/dakennguyen/start/gv
+	url = git@github.com:dakennguyen/gv.vim.git
+
+[submodule "pack/gcmt/start/taboo"]
+	path = pack/gcmt/start/taboo
+	url = git@github.com:gcmt/taboo.vim.git
