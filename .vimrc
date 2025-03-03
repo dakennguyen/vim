@@ -1,4 +1,4 @@
-set background=dark
+set background=light
 let g:loaded_ruby_provider = 0
 
 let g:loaded_2html_plugin = 1
@@ -34,7 +34,7 @@ let g:loaded_bugreport = 1
 call plug#begin()
 
 " Group: Theme
-Plug 'nordtheme/vim'
+Plug 'morhetz/gruvbox'
 " Plug 'tribela/vim-transparent'
 Plug 'itchyny/lightline.vim'
 
@@ -111,7 +111,7 @@ set belloff=all
 set encoding=utf8
 set laststatus=2
 set termguicolors
-colorscheme nord
+colorscheme gruvbox
 
 " Fold
 set foldenable
@@ -121,7 +121,7 @@ set foldmethod=indent
 
 " Search
 set incsearch
-set hlsearch
+set nohlsearch
 " set inccommand=split
 set ignorecase
 set smartcase
@@ -294,7 +294,6 @@ autocmd User ProjectionistDetect
 "----------------------------------------------
 let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
 let $FZF_DEFAULT_OPTS=" --bind 'ctrl-d:preview-page-down,ctrl-u:preview-page-up'"
-let g:fzf_preview_source=" --layout reverse --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 let g:fzf_layout = { 'down': '50%' }
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -318,7 +317,8 @@ let g:fzf_colors =
   \ }
 
 " Files
-nnoremap <space>ff <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
+nnoremap <silent> <space>ff :Files<CR>
+nnoremap <silent> <space>fv :Files ~/.dotfiles<CR>
 nnoremap <silent> <space>fd :Files %:p:h<CR>
 nnoremap <silent> <space>fb :Buffers<CR>
 nnoremap <silent> <space>fo :History<CR>
@@ -391,7 +391,7 @@ set nowritebackup
 set cmdheight=1
 set updatetime=300
 set shortmess+=c
-set signcolumn=yes
+set signcolumn=auto
 
 autocmd FileType scss setl iskeyword+=@-@
 
@@ -490,8 +490,8 @@ let g:dispatch_compilers = {
 "---------------------------------------------------------------------------
 " Plug 'vim-test/vim-test'
 "---------------------------------------------------------------------------
-let test#strategy = "dispatch_background"
-let g:test#preserve_screen = 1
+let test#strategy = "dispatch"
+let g:test#preserve_screen = 0
 let g:test#ruby#bundle_exec = 1
 let g:test#ruby#use_binstubs = 0
 let g:test#neovim#term_position = "vert"
@@ -513,7 +513,7 @@ nmap <silent> t<C-g> :TestVisit<CR>
 "---------------------------------------------------------------------------
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode' ],
       \             [ 'readonly', 'filename', 'modified' ] ],
