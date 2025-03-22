@@ -1,12 +1,6 @@
 # Install
-## Using stow
-Install [stow](https://www.gnu.org/software/stow/), then run:
 
-    stow . -t ~
-
-## Manually
-
-    ln -s .vim ~/.vim
+    ln -s $PWD/coc-settings.json ~/.vim/coc-settings.json
 
 # Setup
 Export env variables
