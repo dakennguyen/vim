@@ -41,7 +41,6 @@ call plug#begin()
 
 " Group: Theme
 Plug 'morhetz/gruvbox'
-" Plug 'tribela/vim-transparent'
 Plug 'itchyny/lightline.vim'
 
 " Group: TPope
@@ -52,16 +51,11 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rsi'
 Plug 'dakennguyen/vim-unimpaired'
 
 " Group: Language support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-json', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'neoclide/coc-tsserver', { 'do': 'yarn install --frozen-lockfile' }
-Plug 'fannheyward/coc-markdownlint', { 'do': 'yarn install --frozen-lockfile' }
-
-" Group: Framework support
-Plug 'vim-test/vim-test'
 
 " Group: Editing support
 Plug 'alvan/vim-closetag'
@@ -72,17 +66,12 @@ Plug 'github/copilot.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'justinmk/vim-dirvish'
-Plug 'dakennguyen/vim-dirvish-dovish'
 
 " Group: Navigator
 Plug 'easymotion/vim-easymotion'
 
 " Group: Git
 Plug 'airblade/vim-gitgutter'
-Plug 'dakennguyen/gv.vim'
-
-" Group: Miscellaneous
-Plug 'gcmt/taboo.vim'
 
 call plug#end()
 
@@ -97,7 +86,6 @@ set nocompatible
 set noswapfile
 set number
 set rnu
-set re=1
 set expandtab
 set tabstop=2
 set softtabstop=2
@@ -105,8 +93,8 @@ set shiftwidth=2
 set autoread
 set smartindent
 set autoindent
-set cursorline
 set wildmenu
+set noshowmode
 set encoding=UTF-8
 set exrc                  " Enable reading local .nvimrc
 set so=5                  " Scrolloff
@@ -244,12 +232,6 @@ nnoremap <silent> <leader>c :copen<cr>
 let g:closetag_filenames = '*.html,*.jsx,*.js,*.erb'
 
 "----------------------------------------------
-" Plug 'gcmt/taboo.vim'
-"----------------------------------------------
-set sessionoptions+=tabpages,globals
-nnoremap <silent> <leader>rn :TabooRename<space>
-
-"----------------------------------------------
 " Plug 'tpope/vim-projectionist'
 "----------------------------------------------
 autocmd User ProjectionistDetect
@@ -356,8 +338,8 @@ nmap <silent> s <Plug>(easymotion-bd-f)
 "----------------------------------------------
 " Plug 'AndrewRadev/splitjoin.vim'
 "----------------------------------------------
-let g:splitjoin_split_mapping = ']s'
-let g:splitjoin_join_mapping  = '[s'
+let g:splitjoin_split_mapping = 'gS'
+let g:splitjoin_join_mapping  = 'gJ'
 
 "----------------------------------------------
 " Plug 'github/copilot.vim'
@@ -401,6 +383,7 @@ let g:coc_global_extensions = [
       \  'coc-solargraph',
       \  'coc-sql',
       \  'coc-yaml',
+      \  'coc-tsserver',
       \]
 
 "# <CR> for Selection - fix conflict with endwise
@@ -443,9 +426,10 @@ nmap <silent> gdd <Plug>(coc-definition)
 nmap <silent> gdv :call CocAction('jumpDefinition', 'vsplit') <CR>
 nmap <silent> gds :call CocAction('jumpDefinition', 'split') <CR>
 nmap <silent> gh :call CocAction('doHover')<CR>
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gry <Plug>(coc-type-definition)
+nmap <silent> gri <Plug>(coc-implementation)
+nmap <silent> grr <Plug>(coc-references)
+nmap <silent> gra <Plug>(coc-action)
 nnoremap <silent> <space>ll :call CocAction('diagnosticPreview')<CR>
 
 "# Code Formatting
@@ -475,33 +459,16 @@ nmap <silent> <leader>l :CocDiagnostics<cr>
 "---------------------------------------------------------------------------
 nnoremap <silent> <leader>C :Copen<cr>
 nnoremap <silent> <space>C :Copen!<cr>
-let g:dispatch_no_tmux_make = 1
+vnoremap `<space> :Dispatch<space>
+vnoremap `<CR> :Dispatch<CR>
+nnoremap t<C-n> mT<cmd>.Dispatch<CR>
+nnoremap t<C-l> <cmd>Copen<bar>Dispatch<CR>
+nnoremap t<C-g> 'T
 let g:dispatch_no_tmux_start = 1
 let g:dispatch_compilers = {
       \ 'python -m pytest': 'pytest',
       \ 'bundle exec spring': '',
       \ 'bundle exec': ''}
-
-"---------------------------------------------------------------------------
-" Plug 'vim-test/vim-test'
-"---------------------------------------------------------------------------
-let test#strategy = "dispatch"
-let g:test#preserve_screen = 0
-let g:test#ruby#bundle_exec = 1
-let g:test#ruby#use_binstubs = 0
-let g:test#neovim#term_position = "vert"
-let g:test#neovim#start_normal = 0
-let g:test#javascript#runner = "jest"
-let g:test#javascript#jest#executable = "yarn test"
-let g:test#java#gradletest#options = "--info"
-let g:test#python#pytest#options = "-vv"
-
-nmap <silent> t<C-n> :TestNearest<CR>|
-nmap <silent> t<C-d> :TestNearest -strategy=neovim<CR>
-nmap <silent> t<C-f> :TestFile<CR>
-nmap <silent> t<C-s> :TestSuite<CR>
-nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
 
 "---------------------------------------------------------------------------
 " Plug 'itchyny/lightline.vim'
@@ -546,19 +513,11 @@ nnoremap <silent> <leader>gz :Gclog! -g stash \| copen<CR>
 nnoremap <silent> <leader>gt :0Gclog! \| copen<CR>
 nnoremap <silent> <leader>gx :GBrowse<CR>
 nnoremap <silent> <leader>gx :GBrowse<CR>
+nnoremap <silent> <space>gg :Git log -n 5000 --oneline --date=short --pretty=format:"%h %ad -%d %s (%an)"<CR>
 
 " vim diff
-nnoremap <leader>gh :diffget //2 \| diffupdate<cr>
-nnoremap <leader>gl :diffget //3 \| diffupdate<cr>
-noremap <leader>gj :diffput \| diffupdate<cr>
-noremap <leader>go :diffget \| diffupdate<cr>
-
-"---------------------------------------------------------------------------
-" Plug 'junegunn/gv.vim'
-"---------------------------------------------------------------------------
-nnoremap <silent> <leader>gv :GV!<CR>
-vnoremap <silent> <leader>gv :GV<CR>
-nnoremap <silent> <space>gg :GV -n 200<cr>
+noremap <leader>dp :diffput<cr>
+noremap <leader>do :diffget<cr>
 
 "---------------------------------------------------------------------------
 " Plug 'justinmk/vim-dirvish'
