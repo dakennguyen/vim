@@ -41,7 +41,6 @@ call plug#begin()
 
 " Group: Theme
 Plug 'morhetz/gruvbox'
-Plug 'itchyny/lightline.vim'
 
 " Group: TPope
 Plug 'tpope/vim-dispatch'
@@ -469,35 +468,6 @@ let g:dispatch_compilers = {
       \ 'python -m pytest': 'pytest',
       \ 'bundle exec spring': '',
       \ 'bundle exec': ''}
-
-"---------------------------------------------------------------------------
-" Plug 'itchyny/lightline.vim'
-"---------------------------------------------------------------------------
-set laststatus=2
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ 'active': {
-      \   'left': [ [ 'mode' ],
-      \             [ 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'filetype' ] ]
-      \ },
-      \ 'inactive': {
-      \   'left': [ [ 'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ] ]
-      \ },
-      \ 'component': {
-      \   'short_mode': '%{toupper(mode())}',
-      \ },
-      \ }
-
-" auto reload
-if exists("g:loaded_lightline") && g:colors_name =~# 'iceberg'
-  execute "source " . g:plug_home . "/lightline.vim/autoload/lightline/colorscheme/iceberg.vim"
-  windo call lightline#colorscheme()
-elseif exists('g:colors_name')
-  exe 'colorscheme ' . g:colors_name
-endif
 
 "---------------------------------------------------------------------------
 " Plug 'tpope/vim-fugitive'
