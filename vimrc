@@ -60,6 +60,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'alvan/vim-closetag'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'github/copilot.vim'
+Plug 'junegunn/vim-easy-align'
 
 " Group: Files manager
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -468,6 +469,12 @@ let g:dispatch_compilers = {
       \ 'python -m pytest': 'pytest',
       \ 'bundle exec spring': '',
       \ 'bundle exec': ''}
+
+"---------------------------------------------------------------------------
+" Plug 'junegunn/vim-easy-align'
+"---------------------------------------------------------------------------
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 "---------------------------------------------------------------------------
 " Plug 'tpope/vim-fugitive'
