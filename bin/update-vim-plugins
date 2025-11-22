@@ -1,0 +1,144 @@
+#!/bin/sh
+
+set -e
+[ -n "$DEBUG" ] && set -ex
+
+bundles="
+  https://github.com/morhetz/gruvbox
+  https://tpope.io/vim/dispatch
+  https://tpope.io/vim/fugitive
+  https://tpope.io/vim/projectionist
+  https://tpope.io/vim/surround
+  https://tpope.io/vim/rhubarb
+  https://tpope.io/vim/commentary
+  https://tpope.io/vim/endwise
+  https://tpope.io/vim/rsi
+  https://github.com/dakennguyen/vim-unimpaired
+  https://github.com/neoclide/coc.nvim
+  https://github.com/alvan/vim-closetag
+  https://github.com/AndrewRadev/splitjoin.vim
+  https://github.com/github/copilot.vim
+  https://github.com/junegunn/vim-easy-align
+  https://github.com/junegunn/fzf
+  https://github.com/junegunn/fzf.vim
+  https://github.com/justinmk/vim-dirvish
+  https://github.com/easymotion/vim-easymotion
+  https://github.com/airblade/vim-gitgutter
+"
+
+find_upstream_branch() {
+  branches="(master|main|release|canary)"
+
+  if git -C "$1" branch | grep -qEo "$branches"; then
+    git -C "$1" branch | grep -Eo "$branches" | head -n 1
+  else
+    exit 1
+  fi
+}
+
+no_upstream_branch_found() {
+  echo "No upstream can be found for '$1'"
+  exit 1
+}
+
+git_sha_range() {
+  work_tree_path="$1"
+  current_sha="$(git -C "$work_tree_path" rev-parse --short HEAD)"
+  upstream_branch=$(find_upstream_branch "$work_tree_path") ||
+    no_upstream_branch_found "$work_tree_path"
+  new_sha="$(
+    git -C "$work_tree_path" \
+      rev-parse --short "origin/$upstream_branch"
+  )"
+
+  echo "$current_sha...$new_sha"
+}
+
+on_upstream_branch() {
+  work_tree_path="$1"
+  current_branch="$(git -C "$work_tree_path" symbolic-ref --short HEAD)"
+  upstream_branch=$(find_upstream_branch "$work_tree_path") ||
+    no_upstream_branch_found "$work_tree_path"
+
+  [ "$current_branch" = "$upstream_branch" ]
+}
+
+behind_upstream() {
+  work_tree_path="$1"
+
+  git -C "$work_tree_path" status -sb | grep -q behind
+}
+
+display_new_commits_github() {
+  work_tree_path="$1"
+  sha_range=$(git_sha_range "$1")
+  url=$(git -C "$work_tree_path" config remote.origin.url)
+
+  echo "$url/compare/$sha_range"
+}
+
+display_new_commits_tpope() {
+  work_tree_path="$1"
+  sha_range=$(git_sha_range "$1")
+  repository="vim-$(basename "$1")"
+
+  echo "https://github.com/tpope/$repository/compare/$sha_range"
+}
+
+display_new_commits_git_log() {
+  work_tree_path="$1"
+  sha_range=$(git_sha_range "$1")
+
+  echo "$work_tree_path"
+  git -C "$work_tree_path" --no-pager log --oneline "$sha_range"
+  echo
+}
+
+display_new_commits() {
+  work_tree_path="$1"
+  url=$(git -C "$work_tree_path" config remote.origin.url)
+
+  if
+    on_upstream_branch "$work_tree_path" &&
+      behind_upstream "$work_tree_path"
+  then
+    if echo "$url" | grep -q github.com; then
+      display_new_commits_github "$work_tree_path"
+    elif echo "$url" | grep -q tpope.io; then
+      display_new_commits_tpope "$work_tree_path"
+    else
+      display_new_commits_git_log "$work_tree_path"
+    fi
+  fi
+}
+
+for bundle in ${bundles}; do
+  bundle_name="$(basename "$bundle")"
+  vim_bundle="$HOME/.config/vim/pack/bundle/start/$bundle_name"
+
+  if [ ! -d "$vim_bundle" ]; then
+    git clone --template /dev/null "$bundle" "$vim_bundle" >/dev/null 2>&1
+  fi
+done
+
+find \
+  "$HOME/.config/vim/pack/bundle/start" \
+  -maxdepth 2 \
+  -type d \
+  -name ".git" |
+  while read -r path; do
+    path="${path%/.git}"
+
+    if git -C "$path" remote | grep -q origin; then
+      git -C "$path" fetch -q origin
+
+      display_new_commits "$path"
+
+      upstream_branch=$(find_upstream_branch "$path") ||
+        no_upstream_branch_found "$path"
+      git -C "$path" rebase --autostash -q "origin/$upstream_branch" \
+        >/dev/null 2>&1
+    fi
+  done
+
+nohup vim -u NONE -c "helptags ALL" -cq >/dev/null 2>&1

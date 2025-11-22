@@ -37,44 +37,6 @@ let g:loaded_bugreport = 1
 
 " set tags=./tags;,tags;
 
-call plug#begin()
-
-" Group: Theme
-Plug 'morhetz/gruvbox'
-
-" Group: TPope
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-rsi'
-Plug 'dakennguyen/vim-unimpaired'
-
-" Group: Language support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Group: Editing support
-Plug 'alvan/vim-closetag'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'github/copilot.vim'
-Plug 'junegunn/vim-easy-align'
-
-" Group: Files manager
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'justinmk/vim-dirvish'
-
-" Group: Navigator
-Plug 'easymotion/vim-easymotion'
-
-" Group: Git
-Plug 'airblade/vim-gitgutter'
-
-call plug#end()
-
 " #############################################
 " Section: Settings
 " #############################################

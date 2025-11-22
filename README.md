@@ -1,5 +1,6 @@
 # Install
 
+    ./bin/update-vim-plugins
     ln -s $PWD/coc-settings.json ~/.vim/coc-settings.json
 
 # Setup
