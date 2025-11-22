@@ -14,7 +14,7 @@ bundles="
   https://tpope.io/vim/endwise
   https://tpope.io/vim/rsi
   https://github.com/dakennguyen/vim-unimpaired
-  https://github.com/neoclide/coc.nvim
+  https://github.com/neoclide/coc.nvim:release
   https://github.com/alvan/vim-closetag
   https://github.com/AndrewRadev/splitjoin.vim
   https://github.com/github/copilot.vim
@@ -29,6 +29,16 @@ bundles="
 find_upstream_branch() {
   branches="(master|main|release|canary)"
 
+  # First, check if the current branch matches one of the patterns and exists upstream
+  current_branch="$(git -C "$1" symbolic-ref --short HEAD 2>/dev/null || echo "")"
+  if [ -n "$current_branch" ] && \
+     echo "$current_branch" | grep -qE "^$branches$" && \
+     git -C "$1" ls-remote --heads origin "$current_branch" >/dev/null 2>&1; then
+    echo "$current_branch"
+    return
+  fi
+
+  # Otherwise, look for any matching branch
   if git -C "$1" branch | grep -qEo "$branches"; then
     git -C "$1" branch | grep -Eo "$branches" | head -n 1
   else
@@ -113,11 +123,33 @@ display_new_commits() {
 }
 
 for bundle in ${bundles}; do
-  bundle_name="$(basename "$bundle")"
+  # Parse bundle URL and optional branch (format: url:branch)
+  # Extract everything after the last colon as potential branch name
+  # Only treat it as branch if it doesn't contain slashes (URLs have slashes, branches don't)
+  last_part="${bundle##*:}"
+
+  # Check if last part looks like a branch name (no slashes)
+  # This works because:
+  # - https:// URLs: last part after colon is "//github.com/..." (has slashes) → not a branch
+  # - url:branch: last part is "branch" (no slashes) → is a branch
+  if echo "$bundle" | grep -q ":" && ! echo "$last_part" | grep -q "/"; then
+    # Remove the last colon and everything after it to get the URL
+    bundle_url="${bundle%:*}"
+    bundle_branch="$last_part"
+  else
+    bundle_url="$bundle"
+    bundle_branch=""
+  fi
+
+  bundle_name="$(basename "$bundle_url")"
   vim_bundle="$HOME/.config/vim/pack/bundle/start/$bundle_name"
 
   if [ ! -d "$vim_bundle" ]; then
-    git clone --template /dev/null "$bundle" "$vim_bundle" >/dev/null 2>&1
+    if [ -n "$bundle_branch" ]; then
+      git clone --template /dev/null -b "$bundle_branch" "$bundle_url" "$vim_bundle" >/dev/null 2>&1
+    else
+      git clone --template /dev/null "$bundle_url" "$vim_bundle" >/dev/null 2>&1
+    fi
   fi
 done
 
